@@ -1,11 +1,17 @@
 import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { CreateNoteDto } from './dto/create-note.dto';
 import { Note } from './note.entity';
 import { NotesService } from './notes.service';
 
 @Controller('notes')
 export class NotesController {
-  constructor(private notesService: NotesService) {}
+  constructor(
+    private notesService: NotesService,
+    private configService: ConfigService,
+  ) {
+    console.log(configService.get('DB_HOST'));
+  }
 
   @Get()
   getNotes(): Promise<Note[]> {
